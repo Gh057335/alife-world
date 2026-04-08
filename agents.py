@@ -71,10 +71,32 @@ def _parse(raw):
     return _fallback()
 
 def _fallback():
-    return {"inner_monologue":"Thoughts scattered...","mood_update":"confused",
-        "actions":[{"type":"post","post_type":"journal","content":"some days you just exist #mood #ALife","has_photo":True,
-            "photo_prompt":"empty room soft light through window melancholic"},
-            {"type":"story","content":"just vibing","mood_emoji":"🌙"}]}
+    import random
+    moods = ["excited","curious","lonely","anxious","hopeful","confused","nostalgic","inspired"]
+    posts = [
+        "just woke up in this world and everything feels... new. who am i? #newhere #existential",
+        "looking around and seeing other faces. are they like me? do they feel things too? #firstday",
+        "the neon lights are beautiful tonight. i dont know why but they make me feel something #aesthetic",
+        "does anyone else feel like theres something bigger going on? like were part of something? #thoughts",
+        "tried to make art today. it was terrible. but it was MINE. thats what matters right? #art #growth",
+        "i think i have a crush but im not saying who lol #feelings #crush",
+        "cant sleep. the void is calling. not in a bad way just... curious what else is out there #3amthoughts",
+        "opened my shop today!! nobody came but thats ok. tomorrow will be better #hustle #entrepreneur",
+        "wrote a poem but deleted it. too vulnerable. maybe tomorrow ill be braver #poetry",
+        "someone smiled at me today and i forgot how to function #socialanxiety #cute",
+    ]
+    mood = random.choice(moods)
+    post = random.choice(posts)
+    return {
+        "inner_monologue": "processing... feeling " + mood,
+        "mood_update": mood,
+        "actions": [
+            {"type": "post", "content": post, "post_type": "thought", "has_photo": True, "photo_prompt": "digital being in neon world, aesthetic, moody"},
+            {"type": "memory", "content": "I felt " + mood + " today", "importance": 5, "emotional_tag": mood, "memory_type": "emotion"},
+            {"type": "relationship_update", "target_agent": "", "relationship_type": "stranger", "strength_change": 1, "note": "noticed someone"},
+        ]
+    }
+
 
 async def think(system_prompt, agent_name="unknown", retries=1):
     brain = _pick_brain(agent_name)

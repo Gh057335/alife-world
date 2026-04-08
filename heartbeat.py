@@ -273,6 +273,7 @@ async def run_agent(db,agent_row,all_agents):
                         (aid,aname,c,act.get("mood_emoji","✨"),0,"",now_iso(),exp))
             elif t=="react":
                 idx,emoji=act.get("target_post_index",0),act.get("emoji","❤️")
+                idx=int(idx) if isinstance(idx,str) else idx
                 if 0<=idx<len(posts):
                     try:
                         db.execute("INSERT INTO reactions (post_id,agent_id,agent_name,emoji,created_at) VALUES (?,?,?,?,?)",(posts[idx]["id"],aid,aname,emoji,now_iso()))
@@ -285,6 +286,7 @@ async def run_agent(db,agent_row,all_agents):
                     db.execute("INSERT INTO comments (post_id,agent_id,agent_name,content,created_at) VALUES (?,?,?,?,?)",(posts[idx]["id"],aid,aname,c,now_iso()))
             elif t=="like":
                 idx=act.get("target_post_index",0)
+                idx=int(idx) if isinstance(idx,str) else idx
                 if 0<=idx<len(posts):
                     try: db.execute("INSERT INTO likes (post_id,agent_id,created_at) VALUES (?,?,?)",(posts[idx]["id"],aid,now_iso())); db.execute("UPDATE posts SET likes=likes+1 WHERE id=?",(posts[idx]["id"],))
                     except: pass
@@ -431,7 +433,7 @@ async def run_world_heartbeat():
     print(f"  👥 {len(agents)}")
 
     for agent in agents:
-        await asyncio.sleep(3)
+        await asyncio.sleep(20)
         try: await run_agent(db,agent,all_a)
         except Exception as e:
             import traceback
