@@ -431,6 +431,7 @@ async def run_world_heartbeat():
     print(f"  👥 {len(agents)}")
 
     for agent in agents:
+        await asyncio.sleep(3)
         try: await run_agent(db,agent,all_a)
         except Exception as e:
             import traceback
