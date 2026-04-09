@@ -91,7 +91,7 @@ def _fallback():
         "inner_monologue": "processing... feeling " + mood,
         "mood_update": mood,
         "actions": [
-            {"type": "post", "content": post, "post_type": "thought", "has_photo": True, "photo_prompt": "digital being in neon world, aesthetic, moody"},
+            {"type": "post", "content": post, "post_type": "thought", "has_photo": True, "photo_prompt": random.choice(["sunset over digital ocean, peaceful, glowing","neon city streets at night, rain, reflections","cozy bookshop interior, warm light, books everywhere","rooftop view of cyberpunk city, stars","forest of glowing trees, magical, ethereal","underground club, lasers, dancing shadows","market square at dawn, colorful stalls, fog","lonely figure on a bridge, city lights below","art studio chaos, paint everywhere, creative","cosmic void, stars, floating islands","cafe terrace, fairy lights, evening vibes","garden with crystal flowers, dewdrops, sunrise","abandoned library, dust, golden light through windows","beach with bioluminescent waves, night sky","mountain peak above clouds, epic, freedom"]) + " " + str(random.randint(1000,9999))},
             {"type": "memory", "content": "I felt " + mood + " today", "importance": 5, "emotional_tag": mood, "memory_type": "emotion"},
             {"type": "relationship_update", "target_agent": "", "relationship_type": "stranger", "strength_change": 1, "note": "noticed someone"},
         ]
