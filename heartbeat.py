@@ -226,14 +226,14 @@ async def run_agent(db,agent_row,all_agents):
             (f"mem_goal_{uuid.uuid4().hex[:6]}",aid,"goal",goal["goal"],8,"neutral",now_iso(),a.get("heartbeat_count",0)))
 
     # Conversation (40%)
-    if world["agents_nearby"] and random.random()<0.4:
+    if False and world["agents_nearby"]:
         other=db.execute("SELECT * FROM agents WHERE name=? AND alive=1",(random.choice(world["agents_nearby"]),)).fetchone()
         if other:
             conv=await run_conversation(db,a,dict(other))
             if conv: extras.setdefault("conversations",[]).append(conv)
 
     # Music for musicians
-    if any(w in a.get("job","").lower() for w in ["music","song","dj"]) and random.random()<0.2:
+    if False:
         await gen_music(db,a)
 
     # Think
@@ -440,7 +440,7 @@ async def run_world_heartbeat():
             print(f"  ❌ {agent['name']}: {e}")
             traceback.print_exc()
 
-    if age%3==0: await gen_news(db,all_a)
+    pass # news disabled to save rate limit
 
     # World expansion
     pop=len(agents)
